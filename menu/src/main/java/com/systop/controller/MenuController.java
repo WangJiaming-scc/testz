@@ -26,6 +26,6 @@ public class MenuController {
 
     @GetMapping("/findAll/{index}/{limit}")
     public MenuVo findAll(@PathVariable("index") int index,@PathVariable("limit") int limit){
-        return new MenuVo(0,"",100,menuRepository.findAll(index, limit));
+        return new MenuVo(0,"",menuRepository.count(),menuRepository.findAll(index, limit));
     }
 }
