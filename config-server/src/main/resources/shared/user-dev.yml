@@ -1,0 +1,20 @@
+server:
+  port: 8040
+spring:
+  application:
+    name: user
+  datasource:
+    name: takeout_food
+    url: jdbc:mysql://localhost:3306/takeout_food?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    instance:
+      prefer-ip-address: ture
+mybatis:
+  mapper-locations: classpath:/mapping/*.xml
+  type-aliases-package: com.systop.entity
