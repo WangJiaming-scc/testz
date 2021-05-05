@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("client")
+@RequestMapping("/client")
 public class ClientController {
 
     @Autowired
@@ -25,5 +25,11 @@ public class ClientController {
     @GetMapping("/redirect/{location}")
     public String redirect(@PathVariable("location") String location){
         return location;
+    }
+
+    @GetMapping("/delById/{id}")
+    public String delete(@PathVariable("id") long id){
+        menuFeign.delete(id);
+        return "redirect:/client//redirect/index";
     }
 }

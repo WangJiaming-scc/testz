@@ -10,5 +10,5 @@ public interface MenuRepository {
     public Menu findById(long id);
     public void save(Menu menu);
     public void update(Menu menu);
-    public void deleteById(long id);
+    public int deleteById(long id);
 }

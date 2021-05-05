@@ -2,6 +2,7 @@ package com.systop.feign;
 
 import com.systop.entity.MenuVo;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -11,4 +12,7 @@ public interface MenuFeign {
 
     @GetMapping("/menu/findAll/{index}/{limit}")
     public MenuVo findAll(@PathVariable("index") int index, @PathVariable("limit") int limit);
+
+    @DeleteMapping("/menu/delById/{id}")
+    public void delete(@PathVariable("id") long id);
 }
