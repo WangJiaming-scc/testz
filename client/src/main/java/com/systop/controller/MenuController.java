@@ -47,4 +47,19 @@ public class MenuController {
         menuFeign.save(menu);
         return "redirect:/menu/redirect/index";
     }
+
+    @GetMapping("/findById/{id}")
+    public ModelAndView findById(@PathVariable("id") long id){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("menu_update");
+        modelAndView.addObject("menu",menuFeign.findById(id));
+        modelAndView.addObject("list",menuFeign.findTypes());
+        return modelAndView;
+    }
+
+    @PostMapping("/update")
+    public String update(Menu menu){
+        menuFeign.update(menu);
+        return "redirect:/menu/redirect/index";
+    }
 }

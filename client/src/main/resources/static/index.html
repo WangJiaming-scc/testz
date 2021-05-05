@@ -47,10 +47,7 @@
             table.on('tool(test)', function(obj){
                 var data = obj.data;
                 if(obj.event === 'update'){
-                    layer.confirm('确定要删除吗？', function (index) {
-                        window.location.href="/menu/delById/"+data.id;
-                        layer.close(index);
-                    });
+                    window.location.href="/menu/findById/"+data.id;
                 }
                 if (obj.event === 'del'){
                     layer.confirm('确定要删除吗？', function (index) {
