@@ -1,14 +1,18 @@
 package com.systop.controller;
 
 import com.systop.entity.User;
+import com.systop.entity.UserVo;
 import com.systop.feign.UserFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController {
 
@@ -23,14 +27,21 @@ public class UserController {
         return this.port;
     }
 
-    @GetMapping("/findAll/{index}/{limit}")
-    public List<User> findAll(@PathVariable("index") int index, @PathVariable("limit") int limit){
-        return userFeign.findAll(index, limit);
+    @GetMapping("/redirect/{location}")
+    public String redirect(@PathVariable("location") String location){
+        return location;
     }
 
-    @GetMapping("/findById/{id}")
-    public User findById(@PathVariable("id") long id){
-        return userFeign.findById(id);
+    @GetMapping("/findAll")
+    @ResponseBody
+    public UserVo findAll(@RequestParam("page") int page, @RequestParam("limit") int limit){
+        int index = (page-1)*limit;
+        UserVo userVo = new UserVo();
+        userVo.setCode(0);
+        userVo.setMsg("");
+        userVo.setCount(userFeign.count());
+        userVo.setData(userFeign.findAll(index,limit));
+        return userVo;
     }
 
     @GetMapping("/count")
@@ -39,17 +50,15 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public void save(@RequestBody User user){
+    public String save(User user){
+        user.setRegisterdate(new Date());
         userFeign.save(user);
+        return "redirect:/user/redirect/user_manage";
     }
 
-    @PutMapping("/update")
-    public void update(@RequestBody User user){
-        userFeign.update(user);
-    }
-
-    @DeleteMapping("/deleteById/{id}")
-    public void delateById(@PathVariable("id") long id){
+    @GetMapping("/deleteById/{id}")
+    public String delateById(@PathVariable("id") long id){
         userFeign.deleteById(id);
+        return "redirect:/user/redirect/user_manage";
     }
 }
