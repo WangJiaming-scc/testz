@@ -1,4 +1,4 @@
-package com.systop.controller.entity;
+package com.systop.entity;
 
 import lombok.Data;
 
